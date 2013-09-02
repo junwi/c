@@ -8,20 +8,27 @@ long fibonacci2(int);
 long fibonacci2_(int, long*);
 int main(int argc, char** argv)
 {
+	if (argc < 2) {
+		printf("Please input the end of this calculation\n");
+		return 0;
+	}
 	int n = atoi(argv[1]);	
 	struct timeval tv;
 	gettimeofday(&tv, NULL);
 	long time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	long result;
 	for (int i = 0; i < 1000; ++i) {
-		fibonacci1(n);
+		result = fibonacci1(n);
 	}
+	printf("%ld\n", result);
 	gettimeofday(&tv, NULL);
 	long time_end = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	printf("time passed:%ld\n", time_end - time);
 	time = time_end;
 	for (int i = 0; i < 1000; ++i) {
-		fibonacci2(n);
+		result = fibonacci2(n);
 	}
+	printf("%ld\n", result);
 	gettimeofday(&tv, NULL);
 	time_end = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	printf("time passed:%ld\n", time_end - time);
@@ -40,7 +47,8 @@ long fibonacci1(int n)
 }
 long fibonacci2(int n)
 {
-	long* cache = (long*) malloc((n + 1) * sizeof(long));
+	long* cache = (long*) calloc(n + 1, sizeof(long));
+//	long* cache = (long*) malloc((n + 1)* sizeof(long));
 	long f = fibonacci2_(n, cache);
 	free(cache);
 	return f;

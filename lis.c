@@ -16,6 +16,7 @@ void lis(int *arr, int n)
 		}
 		printf("%d\n", result[i]);
 	}
+	free(result);
 }
 int main()
 {
